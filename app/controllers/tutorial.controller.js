@@ -116,5 +116,4 @@ exports.findAll = (req, res) => {
       else res.send({ message: `All Tutorials were deleted successfully!` });
     });
   };
-
   
