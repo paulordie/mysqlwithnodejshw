@@ -1,24 +1,27 @@
-const sql = require("./db.js");
+module.exports = app => {
 
-const Tutorial = function(tutorial) {
-  this.title = tutorial.title;
-  this.description = tutorial.description;
-  this.published = tutorial.published;
-};
+  // const sql = require("./db.js");
+  const sql = app.db;
 
-Tutorial.create = (newTutorial, result) => {
-  sql.query("INSERT INTO tutorials SET ?", newTutorial, (err, res) => {
-    if (err) {
-      console.log("error: ", err);
-      result(err, null);
-      return;
-    }
-    console.log("created tutorial: ", { id: res.insertId, ...newTutorial });
-    result(null, { id: res.insertId, ...newTutorial });
-  });
-};
+  const Tutorial = (tutorial) => {
+    this.title = tutorial.title;
+    this.description = tutorial.description;
+    this.published = tutorial.published;
+  };
 
-Tutorial.findById = (id, result) => {
+  Tutorial.create = (newTutorial, result) => {
+    sql.query("INSERT INTO tutorials SET ?", newTutorial, (err, res) => {
+      if (err) {
+        console.log("error: ", err);
+        result(err, null);
+        return;
+      }
+      console.log("created tutorial: ", { id: res.insertId, ...newTutorial });
+      result(null, { id: res.insertId, ...newTutorial });
+    });
+  };
+
+  Tutorial.findById = (id, result) => {
     sql.query(`SELECT * FROM tutorials WHERE id = ${id}`, (err, res) => {
       if (err) {
         console.log("error: ", err);
@@ -112,6 +115,8 @@ Tutorial.findById = (id, result) => {
       result(null, res);
     });
   };
-  
-  module.exports = Tutorial;
-  
+
+  // module.exports = Tutorial;
+  return Tutorial
+
+}

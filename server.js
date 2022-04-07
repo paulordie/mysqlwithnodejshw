@@ -1,22 +1,9 @@
-const express = require("express");
-const cors = require("cors");
-const app = express();
-var corsOptions = {
-  origin: "http://localhost:3004"
-};
-app.use(cors(corsOptions));
-// parse requests of content-type - application/json
-app.use(express.json());
-// parse requests of content-type - application/x-www-form-urlencoded
-app.use(express.urlencoded({ extended: true }));
-// simple route
-app.get("/", (req, res) => {
-  res.json({ message: "Welcome to bezkoder application." });
-});
-require("./app/routes/tutorial.routes.js")(app);
-app.listen();
-// set port, listen for requests
-const PORT = process.env.PORT || 3003;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}.`);
-});
+// const app = require('./config/configuration')();
+const app = require('./config/configuration')();
+const port = app.get('port');
+const ip = require('ip');
+const host = ip.address();
+
+app.listen(port, () => {
+	console.log(`Host: ${host} Server on port: ${port}`)
+})

@@ -1,6 +1,12 @@
-const Tutorial = require("../models/tutorial.model.js");
+module.exports = app => {
 
-exports.create = (req, res) => {
+  // const Tutorial = require("../models/tutorial.model.js");
+
+  const Tutorial = app.models.model;
+
+  const controller = {}
+
+  controller.create = (req, res) => {
     // Validate request
     if (!req.body) {
       res.status(400).send({
@@ -24,8 +30,8 @@ exports.create = (req, res) => {
     });
   };
 
-// Retrieve all Tutorials from the database (with condition).
-exports.findAll = (req, res) => {
+  // Retrieve all Tutorials from the database (with condition).
+  controller.findAll = (req, res) => {
     const title = req.query.title;
     Tutorial.getAll(title, (err, data) => {
       if (err)
@@ -37,18 +43,18 @@ exports.findAll = (req, res) => {
     });
   };
 
-exports.findAllPublished = (req, res) => {
-  Tutorial.getAllPublished((err, data) => {
-    if (err)
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while retrieving tutorials."
-      });
-    else res.send(data);
-  });
-};
+  controller.findAllPublished = (req, res) => {
+    Tutorial.getAllPublished((err, data) => {
+      if (err)
+        res.status(500).send({
+          message:
+            err.message || "Some error occurred while retrieving tutorials."
+        });
+      else res.send(data);
+    });
+  };
 
-  exports.findOne = (req, res) => {
+  controller.findOne = (req, res) => {
     Tutorial.findById(req.params.id, (err, data) => {
       if (err) {
         if (err.kind === "not_found") {
@@ -64,7 +70,7 @@ exports.findAllPublished = (req, res) => {
     });
   };
 
-  exports.update = (req, res) => {
+  controller.update = (req, res) => {
     // Validate Request
     if (!req.body) {
       res.status(400).send({
@@ -91,7 +97,7 @@ exports.findAllPublished = (req, res) => {
     );
   };
 
-  exports.delete = (req, res) => {
+  controller.delete = (req, res) => {
     Tutorial.remove(req.params.id, (err, data) => {
       if (err) {
         if (err.kind === "not_found") {
@@ -107,7 +113,7 @@ exports.findAllPublished = (req, res) => {
     });
   };
 
-  exports.deleteAll = (req, res) => {
+  controller.deleteAll = (req, res) => {
     Tutorial.removeAll((err, data) => {
       if (err)
         res.status(500).send({
@@ -117,4 +123,7 @@ exports.findAllPublished = (req, res) => {
       else res.send({ message: `All Tutorials were deleted successfully!` });
     });
   };
-  
+
+  return controller
+
+}
