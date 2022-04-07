@@ -36,16 +36,17 @@ exports.findAll = (req, res) => {
       else res.send(data);
     });
   };
-  exports.findAllPublished = (req, res) => {
-    Tutorial.getAllPublished((err, data) => {
-      if (err)
-        res.status(500).send({
-          message:
-            err.message || "Some error occurred while retrieving tutorials."
-        });
-      else res.send(data);
-    });
-  };
+
+exports.findAllPublished = (req, res) => {
+  Tutorial.getAllPublished((err, data) => {
+    if (err)
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving tutorials."
+      });
+    else res.send(data);
+  });
+};
 
   exports.findOne = (req, res) => {
     Tutorial.findById(req.params.id, (err, data) => {
