@@ -1,12 +1,13 @@
-module.exports = app => {
+// module.exports = app => {
 
   // const Tutorial = require("../models/tutorial.model.js");
+  const Tutorial = require("../models/model.js");
 
-  const Tutorial = app.models.model;
+  // const Tutorial = app.models.model;
 
   const controller = {}
 
-  controller.create = (req, res) => {
+  exports.create = (req, res) => {
     // Validate request
     if (!req.body) {
       res.status(400).send({
@@ -31,7 +32,7 @@ module.exports = app => {
   };
 
   // Retrieve all Tutorials from the database (with condition).
-  controller.findAll = (req, res) => {
+  exports.findAll = (req, res) => {
     const title = req.query.title;
     Tutorial.getAll(title, (err, data) => {
       if (err)
@@ -43,7 +44,7 @@ module.exports = app => {
     });
   };
 
-  controller.findAllPublished = (req, res) => {
+  exports.findAllPublished = (req, res) => {
     Tutorial.getAllPublished((err, data) => {
       if (err)
         res.status(500).send({
@@ -54,7 +55,7 @@ module.exports = app => {
     });
   };
 
-  controller.findOne = (req, res) => {
+  exports.findOne = (req, res) => {
     Tutorial.findById(req.params.id, (err, data) => {
       if (err) {
         if (err.kind === "not_found") {
@@ -70,7 +71,7 @@ module.exports = app => {
     });
   };
 
-  controller.update = (req, res) => {
+  exports.update = (req, res) => {
     // Validate Request
     if (!req.body) {
       res.status(400).send({
@@ -97,7 +98,7 @@ module.exports = app => {
     );
   };
 
-  controller.delete = (req, res) => {
+  exports.delete = (req, res) => {
     Tutorial.remove(req.params.id, (err, data) => {
       if (err) {
         if (err.kind === "not_found") {
@@ -113,7 +114,7 @@ module.exports = app => {
     });
   };
 
-  controller.deleteAll = (req, res) => {
+  exports.deleteAll = (req, res) => {
     Tutorial.removeAll((err, data) => {
       if (err)
         res.status(500).send({
@@ -124,6 +125,6 @@ module.exports = app => {
     });
   };
 
-  return controller
+//   return controller
 
-}
+// }

@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 
+// const http = require("http")
 
 const bodyParser = require('body-parser');
 const config = require('config');
@@ -41,11 +42,12 @@ module.exports = () => {
     app.set('port', process.env.PORT || 3003);
   
     app.use(bodyParser.json());
+
+    // const httpServer = http.createServer(app)
   
     consign({ cwd: 'app' })
       .then('routes')
       .then('models')
-      .then('controllers')
       .into(app);
   
     return app;
